@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" fill="#FAF7F0"/>
+  <rect x="4" y="4" width="56" height="56" fill="#FF6B35" stroke="#0A0A0A" stroke-width="4"/>
+  <!-- MN monogram -->
+  <g font-family="'Playfair Display', Georgia, 'Times New Roman', serif" font-weight="900" font-size="34" fill="#0A0A0A" text-anchor="middle">
+    <text x="32" y="44" letter-spacing="-2">MN</text>
+  </g>
+  <!-- Tiny corner accent dot for flair -->
+  <circle cx="54" cy="10" r="3" fill="#FFD23F" stroke="#0A0A0A" stroke-width="2"/>
+</svg>
