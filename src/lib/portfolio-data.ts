@@ -72,6 +72,19 @@ export type RoadmapPhase = {
 // Personal info
 // ---------------------------------------------------------------------------
 
+// Canonical site URL — used for SEO (sitemap, robots.txt, canonical URLs,
+// Open Graph tags, JSON-LD structured data). Override with NEXT_PUBLIC_SITE_URL
+// in your Vercel env vars (e.g. "https://moinnoorani.online").
+export const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL || "https://portfolio-sigma-fawn-9qzjoja7rn.vercel.app";
+
+// Google Analytics 4 Measurement ID (format: G-XXXXXXXXXX). Get yours free at
+// https://analytics.google.com → Admin → Create account → Web stream.
+// Set NEXT_PUBLIC_GA_MEASUREMENT_ID in your Vercel env vars. Until set,
+// analytics is disabled and no scripts load.
+export const gaMeasurementId =
+  process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "";
+
 export const personal = {
   name: "Moin Noorani",
   firstName: "Moin",

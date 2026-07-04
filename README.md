@@ -77,6 +77,51 @@ src/
     └── accents.ts            # Accent color helpers
 ```
 
+## 📈 Analytics & SEO
+
+### Google Analytics 4 (GA4)
+The site is wired up for GA4. To activate:
+
+1. Go to https://analytics.google.com → **Admin → Create account**
+2. Property name: `Moin Noorani Portfolio`
+3. Add a **Web stream** → URL: your Vercel domain
+4. Copy the **Measurement ID** (looks like `G-XXXXXXXXXX`)
+5. In Vercel → Settings → Environment Variables, add:
+   ```
+   NEXT_PUBLIC_GA_MEASUREMENT_ID = G-XXXXXXXXXX
+   ```
+6. Redeploy. Data starts flowing within ~5 minutes.
+
+Until the ID is set, no analytics scripts load (privacy-friendly default).
+
+### SEO essentials (already built in)
+- **`/sitemap.xml`** — dynamic, auto-includes all views + every project case study
+- **`/robots.txt`** — allows all crawlers, points to sitemap
+- **JSON-LD Person schema** — structured data with name, job title, skills, credentials, projects, social profiles (validates at https://search.google.com/test/rich-results)
+- **Open Graph tags** — title, description, 1200×630 OG image, site name, locale
+- **Twitter Card** — `summary_large_image` with OG image
+- **Canonical URL** — set via `metadataBase` (override with `NEXT_PUBLIC_SITE_URL` env var)
+- **Robots meta** — `index, follow` with `max-image-preview: large`
+- **OG image** — auto-generated branded brutal image at `/og-image.png` (regenerate with `bun run scripts/gen-og-image.ts`)
+
+### Google Search Console verification
+1. Go to https://search.google.com/search-console
+2. Add property → **URL prefix** → your site URL
+3. Choose **HTML tag** verification method
+4. Copy the `content="..."` value from the meta tag they show you
+5. In Vercel → Settings → Environment Variables, add:
+   ```
+   NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION = <paste-the-content-value>
+   ```
+6. Redeploy → click "Verify" in Search Console
+
+### Custom domain SEO
+When you connect a custom domain (e.g. `moinnoorani.online`):
+1. Add the domain in Vercel → Settings → Domains
+2. Update `NEXT_PUBLIC_SITE_URL` env var to `https://moinnoorani.online`
+3. Redeploy — sitemap, robots, canonical URLs, and OG tags all update automatically
+4. Re-submit the sitemap in Google Search Console (it'll be at `https://moinnoorani.online/sitemap.xml`)
+
 ## 🚀 Features
 
 ### 7 fully-navigable views
