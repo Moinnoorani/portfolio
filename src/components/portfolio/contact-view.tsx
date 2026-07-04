@@ -10,28 +10,82 @@ import {
   Globe,
   Send,
   CheckCircle2,
+  AlertCircle,
+  Info,
 } from "lucide-react";
 import { useState, FormEvent } from "react";
 
-import { personal } from "@/lib/portfolio-data";
+import { personal, web3formsAccessKey } from "@/lib/portfolio-data";
 import { Marquee } from "./marquee";
 import { useViewNav } from "./use-view-nav";
 
+// Whether the form is wired up with a real Web3Forms access key.
+// When false, the form runs in demo mode (simulated success).
+const isLiveMode =
+  web3formsAccessKey &&
+  web3formsAccessKey !== "YOUR_ACCESS_KEY_HERE" &&
+  !web3formsAccessKey.startsWith("YOUR_");
+
+type SubmitState =
+  | { status: "idle" }
+  | { status: "submitting" }
+  | { status: "success" }
+  | { status: "error"; message: string };
+
 export function ContactView() {
   const { navigate } = useViewNav();
-  const [submitting, setSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [state, setState] = useState<SubmitState>({ status: "idle" });
 
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitting(true);
+    setState({ status: "submitting" });
 
-    // Simulate async submission — in a real app this would POST to /api/contact
-    // with the form payload (name, email, company, message).
-    await new Promise((r) => setTimeout(r, 700));
+    const formData = new FormData(e.currentTarget);
+    const payload = {
+      access_key: web3formsAccessKey,
+      name: String(formData.get("name") || ""),
+      email: String(formData.get("email") || ""),
+      company: String(formData.get("company") || ""),
+      subject: `Portfolio contact — ${formData.get("name") || "someone"}`,
+      from_name: "Moin Noorani Portfolio",
+      message: String(formData.get("message") || ""),
+    };
 
-    setSubmitting(false);
-    setSubmitted(true);
+    // Demo mode fallback — simulates a successful submission.
+    if (!isLiveMode) {
+      await new Promise((r) => setTimeout(r, 700));
+      setState({ status: "success" });
+      return;
+    }
+
+    // Live mode — POST to Web3Forms, which emails the message to
+    // moinnoorani85@gmail.com (the email used to sign up for the key).
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setState({ status: "success" });
+      } else {
+        setState({
+          status: "error",
+          message: data.message || "Something went wrong. Please try again.",
+        });
+      }
+    } catch (err) {
+      setState({
+        status: "error",
+        message:
+          "Network error — please check your connection and try again, or email me directly at " +
+          personal.email,
+      });
+    }
   };
 
   const contactCards = [
@@ -112,7 +166,7 @@ export function ContactView() {
           <div className="grid gap-8 md:grid-cols-12">
             {/* Left: form */}
             <div className="md:col-span-7">
-              {submitted ? (
+              {state.status === "success" ? (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.96 }}
                   animate={{ opacity: 1, scale: 1 }}
@@ -127,9 +181,9 @@ export function ContactView() {
                     Message sent!
                   </h2>
                   <p className="mt-3 text-base text-neutral-700 md:text-lg">
-                    Thanks for reaching out — I&apos;ll get back to you within
-                    1–2 business days. In the meantime, feel free to connect on
-                    LinkedIn.
+                    {isLiveMode
+                      ? "Thanks for reaching out — your message is in my inbox. I'll get back to you within 1–2 business days."
+                      : "Thanks for reaching out — this is a demo submission. To actually receive messages, see the note below the form."}
                   </p>
                   <div className="mt-6 flex flex-wrap justify-center gap-3">
                     <a
@@ -141,9 +195,7 @@ export function ContactView() {
                       <Linkedin size={16} /> Connect on LinkedIn
                     </a>
                     <button
-                      onClick={() => {
-                        setSubmitted(false);
-                      }}
+                      onClick={() => setState({ status: "idle" })}
                       className="brutal-btn bg-white text-brutal-black"
                     >
                       Send another
@@ -163,6 +215,27 @@ export function ContactView() {
                       {"// fields marked * are required"}
                     </p>
                   </div>
+
+                  {/* Demo-mode notice — only shown when no real access key is set */}
+                  {!isLiveMode && (
+                    <div className="flex items-start gap-2 border-2 border-brutal-black bg-brutal-yellow-light p-3 text-xs">
+                      <Info size={14} className="mt-0.5 shrink-0 text-brutal-black" />
+                      <p className="text-brutal-black">
+                        <strong>Demo mode.</strong> The form is wired up but no
+                        email access key is set yet. Submissions will simulate
+                        success without actually sending. See the box below the
+                        form to enable real email delivery in 2 minutes.
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Error state */}
+                  {state.status === "error" && (
+                    <div className="flex items-start gap-2 border-2 border-brutal-black bg-brutal-coral p-3 text-xs text-white">
+                      <AlertCircle size={14} className="mt-0.5 shrink-0" />
+                      <p>{state.message}</p>
+                    </div>
+                  )}
 
                   <div className="grid gap-4 sm:grid-cols-2">
                     <Field label="Name" required>
@@ -205,13 +278,64 @@ export function ContactView() {
 
                   <button
                     type="submit"
-                    disabled={submitting}
+                    disabled={state.status === "submitting"}
                     className="brutal-btn bg-brutal-orange text-brutal-black disabled:cursor-not-allowed disabled:opacity-70"
                   >
-                    {submitting ? "Sending..." : "Send Message"}{" "}
-                    {!submitting && <Send size={16} />}
+                    {state.status === "submitting"
+                      ? "Sending..."
+                      : "Send Message"}{" "}
+                    {state.status !== "submitting" && <Send size={16} />}
                   </button>
                 </form>
+              )}
+
+              {/* Setup instructions for enabling real email delivery */}
+              {!isLiveMode && state.status !== "success" && (
+                <div className="brutal-card mt-6 border-2 border-brutal-black bg-brutal-paper p-5">
+                  <div className="flex items-center gap-2">
+                    <Mail size={16} className="text-brutal-orange" />
+                    <h3 className="display-serif text-lg font-black">
+                      Enable real email delivery (2-minute setup)
+                    </h3>
+                  </div>
+                  <ol className="mt-3 flex flex-col gap-2 text-sm text-neutral-700">
+                    <li>
+                      <strong>1.</strong> Go to{" "}
+                      <a
+                        href="https://web3forms.com"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-bold text-brutal-orange underline"
+                      >
+                        web3forms.com
+                      </a>{" "}
+                      and enter{" "}
+                      <code className="border border-brutal-black bg-white px-1">
+                        {personal.email}
+                      </code>
+                      .
+                    </li>
+                    <li>
+                      <strong>2.</strong> Check your inbox — they email you a
+                      free access key (looks like{" "}
+                      <code className="border border-brutal-black bg-white px-1">
+                        a1b2c3d4-...
+                      </code>
+                      ).
+                    </li>
+                    <li>
+                      <strong>3.</strong> In your Vercel project → Settings →
+                      Environment Variables, add:
+                      <pre className="mt-2 overflow-x-auto border-2 border-brutal-black bg-white p-2 font-mono text-xs">
+                        {`NEXT_PUBLIC_WEB3FORMS_KEY = <your-key>`}
+                      </pre>
+                    </li>
+                    <li>
+                      <strong>4.</strong> Redeploy. The form will now actually
+                      send emails to your inbox.
+                    </li>
+                  </ol>
+                </div>
               )}
             </div>
 

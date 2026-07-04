@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import {
   ArrowRight,
+  ArrowUpRight,
   Mail,
   MapPin,
   Sparkles,
@@ -12,6 +13,8 @@ import {
   Rocket,
   Trophy,
   Map as MapIcon,
+  Quote,
+  PenLine,
 } from "lucide-react";
 
 import {
@@ -21,6 +24,8 @@ import {
   stats,
   roadmap,
   certifications,
+  testimonial,
+  posts,
 } from "@/lib/portfolio-data";
 import { accentBg, accentTag, accentBorderLeft } from "@/lib/accents";
 import {
@@ -404,6 +409,114 @@ export function HomeView() {
             >
               See all honours on the About page →
             </button>
+          </div>
+        </div>
+      </section>
+
+      {/* ============================ TESTIMONIAL ============================ */}
+      <section className="px-4 py-16 md:px-8 md:py-24">
+        <div className="mx-auto max-w-5xl">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.5 }}
+            className="brutal-card brutal-card-hover relative overflow-hidden border-2 border-brutal-black bg-brutal-orange p-8 md:p-14"
+          >
+            <Quote
+              size={96}
+              className="absolute -right-4 -top-4 text-brutal-black/15"
+              strokeWidth={1}
+            />
+            <div className="relative">
+              <span className="font-mono text-xs font-bold uppercase tracking-widest text-brutal-black/70">
+                {"// what people say"}
+              </span>
+              <blockquote className="display-serif mt-4 text-2xl font-black italic leading-tight text-brutal-black md:text-3xl">
+                &ldquo;{testimonial.quote}&rdquo;
+              </blockquote>
+              <div className="mt-6 flex items-center gap-4 border-t-2 border-brutal-black/30 pt-4">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center border-2 border-brutal-black bg-white font-mono text-sm font-bold text-brutal-black">
+                  {testimonial.name
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("")}
+                </div>
+                <div className="flex flex-col">
+                  <p className="display-serif text-lg font-black leading-none text-brutal-black">
+                    {testimonial.name}
+                  </p>
+                  <p className="mt-1 font-mono text-xs uppercase tracking-wide text-brutal-black/80">
+                    {testimonial.title} · {testimonial.company}
+                  </p>
+                  <p className="mt-0.5 font-mono text-[10px] uppercase tracking-wider text-brutal-black/60">
+                    {testimonial.relationship}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ============================ WRITING PREVIEW ============================ */}
+      <section className="px-4 py-16 md:px-8 md:py-24">
+        <div className="mx-auto max-w-7xl">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <SectionHeading
+              kicker="// writing & insights"
+              title="Latest Posts"
+              subtitle="Curated tech writing from LinkedIn."
+              icon={<PenLine size={16} />}
+              align="left"
+            />
+            <button
+              onClick={() => navigate("writing")}
+              className="brutal-btn bg-white text-brutal-black"
+            >
+              View All <ArrowRight size={16} />
+            </button>
+          </div>
+
+          <div className="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {[...posts]
+              .sort((a, b) => b.dateSort.localeCompare(a.dateSort))
+              .slice(0, 3)
+              .map((p, i) => (
+                <motion.a
+                  key={p.slug}
+                  href={p.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  initial={{ opacity: 0, y: 12 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-50px" }}
+                  transition={{ duration: 0.4, delay: i * 0.05 }}
+                  className="brutal-card brutal-card-hover group flex h-full flex-col p-5"
+                >
+                  <div className="flex items-center justify-between">
+                    <span className="brutal-tag bg-brutal-yellow-light text-brutal-black">
+                      {p.category}
+                    </span>
+                    <span className="font-mono text-[10px] uppercase tracking-widest text-neutral-500">
+                      {p.dateLabel}
+                    </span>
+                  </div>
+                  <h3 className="display-serif mt-3 text-lg font-black leading-tight">
+                    {p.title}
+                  </h3>
+                  <p className="mt-2 flex-1 text-sm leading-relaxed text-neutral-700">
+                    {p.excerpt}
+                  </p>
+                  <span className="mt-4 flex items-center gap-1 border-t-2 border-brutal-black/10 pt-3 font-mono text-xs font-bold uppercase tracking-wider text-brutal-black">
+                    Read on LinkedIn
+                    <ArrowUpRight
+                      size={12}
+                      className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                    />
+                  </span>
+                </motion.a>
+              ))}
           </div>
         </div>
       </section>

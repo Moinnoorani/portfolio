@@ -8,6 +8,7 @@ const FOOTER_NAV = [
   { label: "Home", view: "home" },
   { label: "About", view: "about" },
   { label: "Projects", view: "projects" },
+  { label: "Writing", view: "writing" },
   { label: "Experience", view: "experience" },
   { label: "Contact", view: "contact" },
 ];

@@ -79,16 +79,32 @@ src/
 
 ## 🚀 Features
 
-### 6 fully-navigable views
-- **Home** — hero with profile card, expertise grid, featured projects, stats, honours, roadmap, contact CTA
-- **About** — bio with dynamic experience duration, skill toolbox, education, all certifications
-- **Projects** — filterable grid of 6 case studies by domain
+### 7 fully-navigable views
+- **Home** — hero with profile card, expertise grid, featured projects, stats, honours, testimonial, latest posts, roadmap, contact CTA
+- **About** — bio with dynamic experience duration, skill toolbox (BA / Supply Chain / Tools / AI Stack), education, all certifications
+- **Projects** — filterable grid of 10 case studies by domain
 - **Project Detail** — full case study with overview, highlights, deliverables, tools sidebar, and "Next case study" navigation chain
+- **Writing** — curated LinkedIn tech posts with category filter (Business Analysis, AI Industry, Agents, Engineering, Process)
 - **Experience** — alternating timeline of 2 roles + education
-- **Contact** — validated form with success state + direct contact cards + resume download
+- **Contact** — working form (Web3Forms integration) + direct contact cards + resume download
+
+### Contact form — actually sends emails
+The contact form is wired up with [Web3Forms](https://web3forms.com) — no backend code needed.
+
+**To enable real email delivery (2-minute setup):**
+1. Go to https://web3forms.com → enter your email → they mail you a free access key
+2. In your Vercel project → Settings → Environment Variables, add:
+   ```
+   NEXT_PUBLIC_WEB3FORMS_KEY = <your-access-key>
+   ```
+3. Redeploy. Submissions will now land in your inbox.
+
+Until the key is set, the form runs in **demo mode** — it simulates success and shows setup instructions on the contact page.
 
 ### Content highlights
-- **6 case studies**: AI Code Review Agent, Fleet Management System, Manufacturing ERP, Channel Management ERP, AI Workflow Automation, Lab Management System
+- **10 case studies**: AI Code Review Agent, Fleet Management System, Manufacturing ERP, Channel Management ERP, AI Workflow Automation, Lab Management System, AI Workflow Automation Suite, AI Content & Deck Generation Pipeline, Autonomous AI Agents Evaluation, Global Client Engagement (Pre-sales)
+- **Testimonial** from Makhdum Chamadiya (CEO & CTO, Codes Technology) on the home page
+- **Writing section** with 6 curated LinkedIn posts (Business Analysis, AI Industry, Agents, Engineering categories) — only tech posts shown, non-tech/hiring posts excluded by design
 - **Dynamic experience** — computed from `careerStartDate` (Oct 2024) every page load, hydration-safe
 - **Resume PDF** — bundled in `/public` and linked from navbar, footer, and contact page
 

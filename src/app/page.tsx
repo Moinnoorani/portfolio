@@ -8,6 +8,7 @@ import { AboutView } from "@/components/portfolio/about-view";
 import { ProjectsView } from "@/components/portfolio/projects-view";
 import { ProjectDetailView } from "@/components/portfolio/project-detail-view";
 import { ExperienceView } from "@/components/portfolio/experience-view";
+import { WritingView } from "@/components/portfolio/writing-view";
 import { ContactView } from "@/components/portfolio/contact-view";
 import { useViewNav } from "@/components/portfolio/use-view-nav";
 
@@ -30,6 +31,9 @@ function ViewRouter() {
       break;
     case "experience":
       content = <ExperienceView />;
+      break;
+    case "writing":
+      content = <WritingView />;
       break;
     case "contact":
       content = <ContactView />;

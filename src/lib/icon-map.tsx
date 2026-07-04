@@ -12,6 +12,10 @@ import {
   Wrench,
   BarChart3,
   TrendingUp,
+  Sparkles,
+  FileText,
+  Bot,
+  Globe,
   type LucideIcon,
 } from "lucide-react";
 
@@ -24,6 +28,10 @@ export const projectIconMap: Record<ProjectIcon, LucideIcon> = {
   workflow: Workflow,
   flask: FlaskConical,
   "code-review": GitPullRequestArrow,
+  sparkles: Sparkles,
+  "file-text": FileText,
+  bot: Bot,
+  globe: Globe,
 };
 
 export const skillIconMap: Record<SkillIcon, LucideIcon> = {

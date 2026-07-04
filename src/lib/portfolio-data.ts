@@ -25,7 +25,11 @@ export type ProjectIcon =
   | "boxes"
   | "workflow"
   | "flask"
-  | "code-review";
+  | "code-review"
+  | "sparkles"
+  | "file-text"
+  | "bot"
+  | "globe";
 
 export type Experience = {
   id: string;
@@ -88,6 +92,131 @@ export const personal = {
 // "now", so the site always reflects the correct tenure without manual edits.
 // Moin started his first BA role at Codes Technology in October 2024.
 export const careerStartDate = new Date("2024-10-01T00:00:00");
+
+// ---------------------------------------------------------------------------
+// Web3Forms access key — used by the contact form to actually send emails.
+// Get yours free at https://web3forms.com (just enter your email, they mail
+// you a key). Replace the placeholder below with your key, or set the
+// NEXT_PUBLIC_WEB3FORMS_KEY env var to override at runtime.
+// Until a real key is set, the form runs in "demo mode" (simulated success).
+export const web3formsAccessKey =
+  process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HERE";
+
+// ---------------------------------------------------------------------------
+// Testimonial — shown on the Home page for social proof.
+// ---------------------------------------------------------------------------
+
+export type Testimonial = {
+  quote: string;
+  name: string;
+  title: string;
+  company: string;
+  relationship: string;
+};
+
+export const testimonial: Testimonial = {
+  quote:
+    "Moin brings a rare mix of business understanding and technical thinking. In conversations with clients he quickly identifies the real problem behind the requirement and turns it into a clear direction for the team to build on. He's proactive, dependable, and someone who naturally takes ownership when working through complex problems.",
+  name: "Makhdum Chamadiya",
+  title: "CEO & CTO",
+  company: "Codes Technology",
+  relationship: "Managed Moin directly",
+};
+
+// ---------------------------------------------------------------------------
+// Writing / Posts — curated LinkedIn articles.
+// Only posts tagged with tech-related categories appear on the site.
+// Non-tech posts (hiring, personal, non-tech articles) are excluded by
+// simply not being added here. To add a new post, append to the array.
+// ---------------------------------------------------------------------------
+
+export type Post = {
+  slug: string;
+  title: string;
+  excerpt: string;
+  category: PostCategory;
+  dateLabel: string;
+  dateSort: string; // ISO date for sorting
+  url: string; // LinkedIn post URL
+  readTime?: string;
+};
+
+export type PostCategory =
+  | "Business Analysis"
+  | "AI Industry"
+  | "Agents"
+  | "Engineering"
+  | "Tools"
+  | "Process";
+
+export const posts: Post[] = [
+  {
+    slug: "oauth-2-explained",
+    title: "OAuth 2.0, explained as a handshake between app, service, and user",
+    excerpt:
+      "A plain-English walkthrough of OAuth 2.0 — what the four-step handshake actually does, where refresh tokens fit in, and why scopes are the unsung heroes of secure integrations.",
+    category: "Engineering",
+    dateLabel: "1 yr ago",
+    dateSort: "2025-07-15",
+    url: "https://www.linkedin.com/in/moinnoorani",
+    readTime: "6 min",
+  },
+  {
+    slug: "gpt-5-shiny-toy-to-core-infra",
+    title: "GPT-5: when AI moves from shiny toy to core infrastructure",
+    excerpt:
+      "What changes when a model stops being a demo and starts being infrastructure. Reliability, evals, fallbacks, and the boring engineering that decides whether your AI feature ships or stalls.",
+    category: "AI Industry",
+    dateLabel: "8 mo ago",
+    dateSort: "2025-11-04",
+    url: "https://www.linkedin.com/in/moinnoorani",
+    readTime: "5 min",
+  },
+  {
+    slug: "from-llm-chat-to-shipped-agent",
+    title: "From chatting with an LLM to shipping an AI agent",
+    excerpt:
+      "The gap between a working chat prompt and a shipped agent is enormous. A practical map of the layers you actually need: memory, tools, guardrails, eval, and the feedback loop that keeps it honest.",
+    category: "Agents",
+    dateLabel: "4 mo ago",
+    dateSort: "2026-03-10",
+    url: "https://www.linkedin.com/in/moinnoorani",
+    readTime: "7 min",
+  },
+  {
+    slug: "seven-ai-releases-this-week",
+    title: "Seven AI releases shipped this week, and what they actually change",
+    excerpt:
+      "A weekly roundup of the AI releases that crossed my desk — what shipped, who it's for, and whether it actually moves the needle for teams building real products or just adds to the noise.",
+    category: "AI Industry",
+    dateLabel: "1 mo ago",
+    dateSort: "2026-06-05",
+    url: "https://www.linkedin.com/in/moinnoorani",
+    readTime: "4 min",
+  },
+  {
+    slug: "ba-uses-jira-day-to-day",
+    title: "How a BA uses Jira day to day: where clarity lives",
+    excerpt:
+      "Jira isn't project management theatre — for a BA it's where requirements meet reality. How I structure epics, stories, and acceptance criteria so the dev can build and the client can validate.",
+    category: "Business Analysis",
+    dateLabel: "3 mo ago",
+    dateSort: "2026-04-12",
+    url: "https://www.linkedin.com/in/moinnoorani",
+    readTime: "5 min",
+  },
+  {
+    slug: "why-requirements-fail",
+    title: "Why requirements fail even when the Jira ticket looks perfect",
+    excerpt:
+      "The ticket is clean, the acceptance criteria are written, the sprint starts — and six weeks later the client says 'this isn't what I asked for.' Where the breakdown actually happens, and how to prevent it.",
+    category: "Business Analysis",
+    dateLabel: "3 mo ago",
+    dateSort: "2026-04-22",
+    url: "https://www.linkedin.com/in/moinnoorani",
+    readTime: "6 min",
+  },
+];
 
 // ---------------------------------------------------------------------------
 // Marquee tags
@@ -162,6 +291,19 @@ export const skillGroups: SkillGroup[] = [
       "Jira, Confluence, draw.io",
       "Agile / Scrum, Sprint Planning",
       "Stakeholder & Vendor Management",
+    ],
+  },
+  {
+    title: "AI Stack",
+    icon: "wrench",
+    accent: "mint",
+    skills: [
+      "Python, OpenAI, Claude",
+      "LangChain, Azure AI",
+      "n8n, Make, Zapier, Power Automate",
+      "Pinecone, FastAPI, Docker",
+      "PostgreSQL, Next.js, TypeScript",
+      "GitHub, GCP",
     ],
   },
 ];
@@ -351,6 +493,126 @@ export const projects: Project[] = [
     ],
     accent: "lilac",
   },
+  {
+    slug: "ai-workflow-automation-suite",
+    title: "AI Workflow Automation Suite",
+    icon: "sparkles",
+    domain: "AI / Internal Ops",
+    client: "Internal Operations · 2026",
+    shortDesc:
+      "AI-powered workflows that automate research, reporting, and internal operations by integrating generative AI with CRM systems and spreadsheets.",
+    longDesc:
+      "Designed and deployed a suite of AI-powered workflows that automate research, reporting, and internal operations at Codes Technology. The suite integrates generative AI (Claude, ChatGPT) with the company's CRM and spreadsheets via Make, replacing manual data wrangling with reliable, repeatable pipelines. Moin owned the discovery, requirements, and rollout — including the prompt templates and the human-in-the-loop checkpoints that keep the output trustworthy.",
+    highlights: [
+      "Designed AI-powered workflows automating research, reporting, and internal operations.",
+      "Integrated generative AI (Claude, ChatGPT) with CRM systems and spreadsheets via Make.",
+      "Authored prompt templates tuned for consistent, brand-safe output across use cases.",
+      "Built human-in-the-loop checkpoints so output stays trustworthy end-to-end.",
+    ],
+    impact: [
+      { label: "Hours saved / week", value: "8+" },
+      { label: "Integrations", value: "CRM + Sheets + LLMs" },
+      { label: "Type", value: "Internal Ops" },
+    ],
+    tools: ["Claude", "ChatGPT", "Make", "Google Sheets API", "Internal Ops"],
+    deliverables: [
+      "Workflow design & process maps",
+      "Prompt template library",
+      "Integration spec (CRM ↔ LLM ↔ Sheets)",
+      "Human-in-the-loop review runbook",
+    ],
+    accent: "orange",
+  },
+  {
+    slug: "ai-content-deck-pipeline",
+    title: "AI Content & Deck Generation Pipeline",
+    icon: "file-text",
+    domain: "AI / Client Delivery",
+    client: "Client Delivery · 2025",
+    shortDesc:
+      "Repeatable pipeline that produces presentations, documents, and reports via generative AI — backed by a library of prompt templates for consistent, brand-safe output.",
+    longDesc:
+      "Built a repeatable pipeline that produces presentations, documents, and reports via generative AI, backed by a library of prompt templates tuned for consistent, brand-safe output. The pipeline turned what used to be a 2-day manual deck-building exercise into a 30-minute guided workflow. Moin scoped the requirements with the delivery team, defined the template structure, and wrote the acceptance criteria that ensured every generated artifact met the firm's quality bar.",
+    highlights: [
+      "Built a repeatable pipeline for AI-generated presentations, documents, and reports.",
+      "Curated a library of prompt templates tuned for consistent, brand-safe output.",
+      "Reduced manual deck-building time from ~2 days to ~30 minutes per engagement.",
+      "Defined acceptance criteria for generated artifacts to meet the firm's quality bar.",
+    ],
+    impact: [
+      { label: "Time per deck", value: "2 days → 30 min" },
+      { label: "Output", value: "Decks · Docs · Reports" },
+      { label: "Type", value: "Client Delivery" },
+    ],
+    tools: ["Prompt Engineering", "GenAI", "Template Systems", "Client Delivery"],
+    deliverables: [
+      "Pipeline spec & acceptance criteria",
+      "Prompt template library (decks, docs, reports)",
+      "Brand-safety guardrails for generated output",
+      "Operator runbook for client delivery team",
+    ],
+    accent: "coral",
+  },
+  {
+    slug: "autonomous-ai-agents-evaluation",
+    title: "Autonomous AI Agents Evaluation",
+    icon: "bot",
+    domain: "AI / R&D",
+    client: "R&D · 2025",
+    shortDesc:
+      "Agentic systems for automated research, summarisation, and multi-step task execution. Benchmarked emerging tools against real internal use-cases to decide what ships.",
+    longDesc:
+      "An R&D engagement exploring agentic systems for automated research, summarisation, and multi-step task execution. The goal wasn't to ship a product — it was to learn which emerging tools (LangChain, autonomous agent frameworks) actually hold up against real internal use-cases. Moin ran the evaluation: defined the use-cases, designed the benchmark, scored each tool against reproducible criteria, and produced a recommendation memo that the engineering team still uses to decide what to bet on.",
+    highlights: [
+      "Experimented with agentic systems for automated research and summarisation.",
+      "Benchmarked emerging tools (LangChain, autonomous agents) against real use-cases.",
+      "Designed reproducible evaluation criteria across multi-step task scenarios.",
+      "Produced a recommendation memo that engineering still uses to pick tools.",
+    ],
+    impact: [
+      { label: "Type", value: "R&D" },
+      { label: "Frameworks", value: "LangChain · Autonomous Agents" },
+      { label: "Outcome", value: "Internal recommendation memo" },
+    ],
+    tools: ["LangChain", "Autonomous Agents", "Evaluation"],
+    deliverables: [
+      "Use-case catalogue for agentic systems",
+      "Reproducible benchmark & scoring rubric",
+      "Tool-by-tool evaluation report",
+      "Internal recommendation memo",
+    ],
+    accent: "lilac",
+  },
+  {
+    slug: "global-client-engagement-presales",
+    title: "Global Client Engagement (Pre-sales)",
+    icon: "globe",
+    domain: "Business Development",
+    client: "Revenue · 2024–2026",
+    shortDesc:
+      "End-to-end pre-sales for custom software engagements across four markets (IN · US · CA · UAE): discovery, scoping, proposals, and closing with enterprise clients.",
+    longDesc:
+      "Ran end-to-end pre-sales for custom software engagements across four markets — India, USA, Canada, and UAE. The role spanned discovery calls, scoping workshops, proposal writing, and closing with enterprise clients. Moin's job was to translate a fuzzy client conversation into a scoped, buildable proposal — and to be honest with the client when their ask didn't match their budget or timeline. The engagement covered 25+ clients and was the bridge between business strategy and technology execution.",
+    highlights: [
+      "Ran pre-sales for custom software engagements across India, USA, Canada, and UAE.",
+      "Owned the full cycle: discovery, scoping, proposals, and closing with enterprise clients.",
+      "Engaged 25+ clients across manufacturing, logistics, and SaaS verticals.",
+      "Scoped honestly — told clients when their ask didn't match budget or timeline.",
+    ],
+    impact: [
+      { label: "Markets", value: "IN · US · CA · UAE" },
+      { label: "Clients engaged", value: "25+" },
+      { label: "Type", value: "Revenue / Pre-sales" },
+    ],
+    tools: ["Discovery", "Scoping", "Proposals", "CRM", "Revenue"],
+    deliverables: [
+      "Discovery & scoping playbook",
+      "Proposal template library",
+      "Client engagement CRM records",
+      "Win/loss analysis for closed deals",
+    ],
+    accent: "yellow",
+  },
 ];
 
 // ---------------------------------------------------------------------------
@@ -444,6 +706,13 @@ export const certifications: Certification[] = [
     issuer: "Google",
     date: "Dec 2025",
     accent: "lilac",
+  },
+  {
+    title: "ISRO / Bharatiya Antariksh Hackathon",
+    issuer: "Indian Space Research Organisation",
+    date: "2025",
+    note: "Submitted proposal for ISRO's national space-tech hackathon — systems design & implementation",
+    accent: "orange",
   },
 ];
 
