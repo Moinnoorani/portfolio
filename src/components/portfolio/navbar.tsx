@@ -90,6 +90,7 @@ export function Navbar() {
           })}
           <a
             href={personal.resumePath}
+            download={personal.resumeName}
             target="_blank"
             rel="noopener noreferrer"
             className="ml-2 border-2 border-brutal-black bg-brutal-orange px-4 py-2 font-mono text-sm font-bold text-brutal-black shadow-[3px_3px_0px_0px_#0A0A0A] transition-all duration-150 hover:-translate-x-0.5 hover:-translate-y-0.5 hover:shadow-[4px_4px_0px_0px_#0A0A0A]"
@@ -129,6 +130,7 @@ export function Navbar() {
             })}
             <a
               href={personal.resumePath}
+              download={personal.resumeName}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-2 border-2 border-brutal-black bg-brutal-orange px-4 py-3 text-center font-mono text-sm font-bold text-brutal-black shadow-[3px_3px_0px_0px_#0A0A0A]"

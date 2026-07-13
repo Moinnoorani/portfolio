@@ -391,6 +391,7 @@ export function ContactView() {
                 {/* Resume CTA */}
                 <a
                   href={personal.resumePath}
+                  download={personal.resumeName}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="brutal-card brutal-card-hover flex items-center justify-between gap-3 border-2 border-brutal-black bg-brutal-orange p-5"

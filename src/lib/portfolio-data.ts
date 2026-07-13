@@ -98,6 +98,10 @@ export const personal = {
   linkedin: "https://linkedin.com/in/moinnoorani",
   portfolio: "https://moinnoorani.netlify.app",
   resumePath: "/MoinNoorani_SU.pdf",
+  // File name used by the `download` attribute on every resume link so the
+  // browser always saves the file instead of opening it inline. Keeping it
+  // next to `resumePath` makes the two stay in sync.
+  resumeName: "MoinNoorani_SU.pdf",
 };
 
 // Career start date — used to compute the dynamic experience duration shown

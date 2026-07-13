@@ -90,6 +90,7 @@ export function ProjectDetailView({ projectId }: { projectId: string | null }) {
                 </button>
                 <a
                   href={personal.resumePath}
+                  download={personal.resumeName}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="brutal-btn bg-white text-brutal-black"
