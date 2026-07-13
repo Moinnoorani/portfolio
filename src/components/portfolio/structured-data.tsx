@@ -49,7 +49,7 @@ export function StructuredData() {
     },
     worksFor: {
       "@type": "Organization",
-      name: "Codes Technology Pvt. Ltd.",
+      name: "Codes Technology",
     },
     hasOccupation: {
       "@type": "Occupation",

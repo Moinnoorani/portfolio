@@ -640,7 +640,7 @@ export const experiences: Experience[] = [
   {
     id: "ba-ai-lead",
     role: "Business Analyst & AI Solutions Lead",
-    company: "Codes Technology Pvt. Ltd.",
+    company: "Codes Technology",
     location: "Surat, India",
     period: "Feb 2026 — Present",
     current: true,
@@ -657,7 +657,7 @@ export const experiences: Experience[] = [
   {
     id: "ba-bd",
     role: "Business Analyst & Business Development Executive",
-    company: "Codes Technology Pvt. Ltd.",
+    company: "Codes Technology",
     location: "Surat, India",
     period: "Oct 2024 — Feb 2026",
     current: false,

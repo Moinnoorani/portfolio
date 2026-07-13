@@ -147,7 +147,7 @@ export function HomeView() {
                   <MapPin size={12} /> {personal.location}
                 </span>
                 <span className="flex items-center gap-1">
-                  <Briefcase size={12} /> Codes Technology Pvt. Ltd.
+                  <Briefcase size={12} /> Codes Technology
                 </span>
                 <span className="flex items-center gap-1">
                   <TrendingUp size={12} /> {experienceInline || "—"} experience
